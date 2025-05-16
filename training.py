@@ -73,6 +73,9 @@ class HandCropDataset(Dataset):
         encoding = self.feature_extractor(images=img_cropped, return_tensors="pt")
         # squeeze batch dim
         pixel_values = encoding.pixel_values.squeeze()
+        # Normalize to mean=0.5, std=0.5
+        pixel_values = (pixel_values - 0.5) / 0.5
+
         return {"pixel_values": pixel_values, "labels": torch.tensor(label)}
 
 
